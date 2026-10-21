@@ -27,57 +27,143 @@ type Product = {
   name: string;
   hindi: string;
   category: string;
+  categoryHindi: string;
   crop: string;
+  cropHindi: string;
+  description: string;
+  descriptionHindi: string;
   image: string;
   alt: string;
   message: string;
+  messageHindi: string;
 };
 
 const products: Product[] = [
   {
-    name: 'DEKALB DKC 9208',
-    hindi: 'डीकेलब डीकेसी 9208',
-    category: 'Maize seed',
-    crop: 'Maize / मक्का',
-    image: '/images/dekalb-dkc-9208.png',
-    alt: 'DEKALB DKC 9208 maize seed packet',
-    message: 'I want to enquire about DEKALB DKC 9208 maize seed. Please share current availability and price.',
+    name: 'Bharat DAP 18:46:0',
+    hindi: 'भारत डीएपी 18:46:0',
+    category: 'Phosphatic fertilizer',
+    categoryHindi: 'फॉस्फेटिक उर्वरक',
+    crop: 'For crop nutrition',
+    cropHindi: 'फसल पोषण के लिए',
+    description: 'Granular DAP fertilizer containing 18% nitrogen and 46% phosphate. Check the pack and seek crop-specific advice before use.',
+    descriptionHindi: '18% नाइट्रोजन और 46% फॉस्फेट वाला दानेदार डीएपी उर्वरक। उपयोग से पहले पैक पर दिए निर्देश पढ़ें और फसल के अनुसार सलाह लें।',
+    image: '/images/aalu/Image%20(10).jpg',
+    alt: 'भारत डीएपी 18:46:0 उर्वरक का पैक',
+    message: 'I would like to ask about Bharat DAP 18:46:0 fertilizer. Please share availability and price.',
+    messageHindi: 'मुझे भारत डीएपी 18:46:0 उर्वरक के बारे में जानकारी चाहिए। कृपया उपलब्धता और कीमत बताएं।',
   },
   {
-    name: 'Pioneer 86M90',
-    hindi: 'पायनियर 86M90',
-    category: 'Hybrid bajra seed',
-    crop: 'Bajra / बाजरा',
-    image: '/images/pioneer-bajra-86m90.jpg',
-    alt: 'Pioneer 86M90 hybrid bajra seed packet',
-    message: 'I want to enquire about Pioneer 86M90 hybrid bajra seed. Please share current availability and price.',
+    name: 'Bharat MOP 60% K₂O',
+    hindi: 'भारत एमओपी 60% पोटाश',
+    category: 'Potash fertilizer',
+    categoryHindi: 'पोटाश उर्वरक',
+    crop: 'For crop nutrition',
+    cropHindi: 'फसल पोषण के लिए',
+    description: 'Muriate of potash fertilizer with 60% K₂O, as stated on the pack. Ask about the suitable quantity for your crop and soil.',
+    descriptionHindi: 'पैक पर दी जानकारी के अनुसार 60% K₂O वाला म्यूरेट ऑफ पोटाश उर्वरक। फसल और मिट्टी के अनुसार मात्रा की सलाह लें।',
+    image: '/images/aalu/Image%20(4).jpg',
+    alt: 'भारत एमओपी 60% पोटाश उर्वरक का पैक',
+    message: 'I would like to ask about Bharat MOP potash fertilizer. Please share availability and price.',
+    messageHindi: 'मुझे भारत एमओपी पोटाश उर्वरक के बारे में जानकारी चाहिए। कृपया उपलब्धता और कीमत बताएं।',
   },
   {
-    name: 'ProAgro 9001',
-    hindi: 'प्रोएग्रो 9001',
-    category: 'Hybrid seed',
-    crop: 'Bajra / बाजरा',
-    image: '/images/proagro-bajra-9001.jpg',
-    alt: 'ProAgro 9001 hybrid seed packet',
-    message: 'I want to enquire about ProAgro 9001 hybrid seed. Please share current availability and price.',
+    name: 'Super Kahar GR 10%',
+    hindi: 'सुपर कहर जीआर 10%',
+    category: 'Insecticide',
+    categoryHindi: 'कीटनाशक',
+    crop: 'Read label before use',
+    cropHindi: 'उपयोग से पहले लेबल पढ़ें',
+    description: 'Granular chlorpyrifos 10% GR insecticide. Use only for label-listed crops and pests, following all safety directions.',
+    descriptionHindi: 'क्लोरपाइरीफॉस 10% जीआर आधारित दानेदार कीटनाशक। केवल लेबल पर दिए गए उपयोग और सुरक्षा निर्देशों के अनुसार ही प्रयोग करें।',
+    image: '/images/aalu/Image%20(6).jpg',
+    alt: 'सुपर कहर जीआर 10% कीटनाशक का पैक',
+    message: 'I would like to ask about Super Kahar GR 10%. Please share availability and the product label details.',
+    messageHindi: 'मुझे सुपर कहर जीआर 10% के बारे में जानकारी चाहिए। कृपया उपलब्धता और पैक पर दिए उपयोग निर्देश बताएं।',
   },
   {
-    name: 'Garuda farm sprayer',
-    hindi: 'गरुड़ फार्म स्प्रेयर',
-    category: 'Farm equipment',
-    crop: 'Farm use / खेत का उपयोग',
-    image: '/images/garuda-sprayer.jpg',
-    alt: 'Yellow Garuda farm sprayer',
-    message: 'I want to enquire about the Garuda farm sprayer. Please share current availability and price.',
+    name: 'Multiplex Boron',
+    hindi: 'मल्टीप्लेक्स बोरॉन',
+    category: 'Micronutrient fertilizer',
+    categoryHindi: 'सूक्ष्म पोषक उर्वरक',
+    crop: 'Boron 10.5%',
+    cropHindi: 'बोरॉन 10.5%',
+    description: 'Boron micronutrient fertilizer (10.5% B, as shown on the pack). Confirm crop suitability and application with an agricultural advisor.',
+    descriptionHindi: 'पैक पर दी जानकारी के अनुसार 10.5% बोरॉन वाला सूक्ष्म पोषक उर्वरक। फसल के लिए उपयुक्तता और उपयोग-विधि की सलाह लें।',
+    image: '/images/aalu/Image%20(7).jpg',
+    alt: 'मल्टीप्लेक्स बोरॉन सूक्ष्म पोषक उर्वरक का पैक',
+    message: 'I would like to ask about Multiplex Boron fertilizer. Please share availability and pack details.',
+    messageHindi: 'मुझे मल्टीप्लेक्स बोरॉन उर्वरक के बारे में जानकारी चाहिए। कृपया उपलब्धता और पैक का विवरण बताएं।',
   },
   {
-    name: 'Syngenta crop protection',
-    hindi: 'सिंजेंटा फसल सुरक्षा',
-    category: 'Crop protection',
-    crop: 'Multiple crops / कई फसलें',
-    image: '/images/syngenta-crop-protection.webp',
-    alt: 'Syngenta crop protection products in a field',
-    message: 'I want to enquire about Syngenta crop protection products. Please help me with the current selection.',
+    name: 'Potato Special',
+    hindi: 'पोटैटो स्पेशल',
+    category: 'Micronutrient fertilizer',
+    categoryHindi: 'सूक्ष्म पोषक उर्वरक',
+    crop: 'For potatoes',
+    cropHindi: 'आलू की फसल के लिए',
+    description: 'A multi-micronutrient fertilizer labelled for soil application on potatoes. Follow the pack directions or ask an agricultural advisor.',
+    descriptionHindi: 'आलू की फसल में मिट्टी के माध्यम से उपयोग के लिए पैक पर दर्शाया गया बहु-सूक्ष्म पोषक उर्वरक। पैक के निर्देश मानें या कृषि विशेषज्ञ से पूछें।',
+    image: '/images/aalu/Image%20(8).jpg',
+    alt: 'पोटैटो स्पेशल बहु-सूक्ष्म पोषक उर्वरक का पैक',
+    message: 'I would like to ask about Potato Special fertilizer. Please share availability and pack directions.',
+    messageHindi: 'मुझे पोटैटो स्पेशल उर्वरक के बारे में जानकारी चाहिए। कृपया उपलब्धता और पैक पर दिए निर्देश बताएं।',
+  },
+  {
+    name: 'Regent Ultra',
+    hindi: 'रीजेंट अल्ट्रा',
+    category: 'Insecticide',
+    categoryHindi: 'कीटनाशक',
+    crop: 'Read label before use',
+    cropHindi: 'उपयोग से पहले लेबल पढ़ें',
+    description: 'An insecticide in a 4 kg pack. Check the product label for approved crops, target pests, directions and safety precautions.',
+    descriptionHindi: '4 किलो पैक में उपलब्ध कीटनाशक। मान्य फसल, लक्षित कीट, उपयोग-विधि और सुरक्षा सावधानियों के लिए उत्पाद का लेबल पढ़ें।',
+    image: '/images/aalu/Image%20(9).jpg',
+    alt: 'बायर रीजेंट अल्ट्रा कीटनाशक का 4 किलो पैक',
+    message: 'I would like to ask about Regent Ultra insecticide. Please share availability and product label details.',
+    messageHindi: 'मुझे रीजेंट अल्ट्रा कीटनाशक के बारे में जानकारी चाहिए। कृपया उपलब्धता और उत्पाद के लेबल का विवरण बताएं।',
+  },
+  {
+    name: 'Mono Zinc',
+    hindi: 'मोनो जिंक',
+    category: 'Micronutrient fertilizer',
+    categoryHindi: 'सूक्ष्म पोषक उर्वरक',
+    crop: 'Zinc and sulphur',
+    cropHindi: 'जिंक और सल्फर',
+    description: 'Zinc sulphate monohydrate micronutrient fertilizer. The pack lists 33% zinc and 15% sulphur; check suitability before use.',
+    descriptionHindi: 'जिंक सल्फेट मोनोहाइड्रेट सूक्ष्म पोषक उर्वरक। पैक पर 33% जिंक और 15% सल्फर दिया है; उपयोग से पहले उपयुक्तता जांचें।',
+    image: '/images/aalu/Image%20(11).jpg',
+    alt: 'मोनो जिंक सूक्ष्म पोषक उर्वरक का पैक',
+    message: 'I would like to ask about Mono Zinc fertilizer. Please share availability and pack details.',
+    messageHindi: 'मुझे मोनो जिंक उर्वरक के बारे में जानकारी चाहिए। कृपया उपलब्धता और पैक का विवरण बताएं।',
+  },
+  {
+    name: 'Sulphur 90% Granules',
+    hindi: 'सल्फर 90% दानेदार',
+    category: 'Sulphur fertilizer',
+    categoryHindi: 'सल्फर उर्वरक',
+    crop: 'Granular formulation',
+    cropHindi: 'दानेदार रूप',
+    description: 'Granular sulphur fertilizer marked 90% on the pack. Ask about crop suitability and follow the label directions.',
+    descriptionHindi: 'पैक पर 90% अंकित दानेदार सल्फर उर्वरक। फसल के लिए उपयुक्तता पूछें और लेबल पर दिए निर्देशों का पालन करें।',
+    image: '/images/aalu/Image%20(12).jpg',
+    alt: 'सल्फर 90% दानेदार उर्वरक का पैक',
+    message: 'I would like to ask about Sulphur 90% granules. Please share availability and pack details.',
+    messageHindi: 'मुझे सल्फर 90% दानेदार उर्वरक के बारे में जानकारी चाहिए। कृपया उपलब्धता और पैक का विवरण बताएं।',
+  },
+  {
+    name: 'Kaveri Barseem Seed',
+    hindi: 'कावेरी बरसीम बीज',
+    category: 'Fodder seed',
+    categoryHindi: 'चारा फसल का बीज',
+    crop: 'Barseem / Berseem',
+    cropHindi: 'बरसीम',
+    description: 'Kaveri-branded barseem seed for sowing as a fodder crop. Ask the shop about pack size, sowing season and availability.',
+    descriptionHindi: 'चारा फसल बरसीम की बुवाई के लिए कावेरी ब्रांड का बीज। पैक का वजन, बुवाई का समय और उपलब्धता दुकान से पूछें।',
+    image: '/images/aalu/Image%20(13).jpg',
+    alt: 'कावेरी बरसीम बीज का प्रचार पोस्टर और पैक',
+    message: 'I would like to ask about Kaveri Barseem seed. Please share pack size, availability and price.',
+    messageHindi: 'मुझे कावेरी बरसीम बीज के बारे में जानकारी चाहिए। कृपया पैक का वजन, उपलब्धता और कीमत बताएं।',
   },
 ];
 
@@ -247,52 +333,71 @@ function ProductCard({ product, lang }: { product: Product; lang: Lang }) {
     <article className="product-card">
       <div className="product-image">
         <img src={product.image} alt={product.alt} loading="lazy" />
-        <span className="product-index">0{products.indexOf(product) + 1}</span>
+        <span className="product-index">{String(products.indexOf(product) + 1).padStart(2, '0')}</span>
       </div>
       <div className="product-card-body">
-        <div className="product-meta"><span>{product.category}</span><span>{product.crop}</span></div>
+        <div className="product-meta"><span>{lang === 'en' ? product.category : product.categoryHindi}</span><span>{lang === 'en' ? product.crop : product.cropHindi}</span></div>
         <h3>{product.name}</h3>
         <p className="hindi-line">{product.hindi}</p>
-        <p className="product-description">{lang === 'en' ? 'Ask the shop about the current selection, price and suitable enquiry details.' : 'वर्तमान चयन, कीमत और जरूरी जानकारी के लिए दुकान से पूछें।'}</p>
-        <EnquiryLink message={product.message} className="product-enquire"><span>{lang === 'en' ? 'Enquire about this' : 'इसके बारे में पूछें'}</span><ArrowRight size={15} /></EnquiryLink>
+        <p className="product-description">{lang === 'en' ? product.description : product.descriptionHindi}</p>
+        <EnquiryLink message={lang === 'en' ? product.message : product.messageHindi} className="product-enquire"><span>{lang === 'en' ? 'Ask about this product' : 'इस उत्पाद की जानकारी लें'}</span><ArrowRight size={15} /></EnquiryLink>
       </div>
     </article>
   );
 }
 
-function ProductCarousel({ lang }: { lang: Lang }) {
-  const scroller = useRef<HTMLDivElement>(null);
-  const [active, setActive] = useState(0);
-  const scroll = (direction: number) => {
-    scroller.current?.scrollBy({ left: direction * (window.innerWidth < 640 ? 292 : 392), behavior: 'smooth' });
-  };
-  const handleScroll = () => {
-    if (!scroller.current) return;
-    const width = scroller.current.firstElementChild?.clientWidth ?? 1;
-    setActive(Math.min(products.length - 1, Math.max(0, Math.round(scroller.current.scrollLeft / (width + 18)))));
-  };
+function ProductsSection({ lang }: { lang: Lang }) {
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [activeProduct, setActiveProduct] = useState(0);
+
+  function scrollProducts(direction: number) {
+    const carousel = carouselRef.current;
+    const firstCard = carousel?.querySelector<HTMLElement>('.product-card');
+    if (!carousel || !firstCard) return;
+
+    const gap = Number.parseFloat(getComputedStyle(carousel).columnGap) || 18;
+    carousel.scrollBy({ left: direction * (firstCard.offsetWidth + gap), behavior: 'smooth' });
+  }
+
   return (
     <section className="products-section" id="products">
       <div className="products-heading">
         <div>
-          <SectionKicker>{lang === 'en' ? 'The enquiry shelf' : 'पूछताछ की सूची'}</SectionKicker>
-          <h2>{lang === 'en' ? <>A few things<br /><em>farmers ask for.</em></> : <>किसान जिन चीज़ों के बारे में<br /><em>पूछते हैं।</em></>}</h2>
+          <SectionKicker>{lang === 'en' ? 'Products at Atul Beej Agency' : 'अतुल बीज एजेंसी के उत्पाद'}</SectionKicker>
+          <h2>{lang === 'en' ? <>For your field,<br /><em>all in one place.</em></> : <>खेत की जरूरतें,<br /><em>एक ही जगह।</em></>}</h2>
+          <p className="products-intro">{lang === 'en' ? 'Browse seeds, fertilizers and crop-protection products shown here. Ask us to confirm today’s stock, price and product-label details before visiting.' : 'यहाँ बीज, उर्वरक और फसल सुरक्षा के उत्पाद देखें। दुकान आने से पहले उपलब्ध स्टॉक, कीमत और पैक पर दिए निर्देशों की पुष्टि कर लें।'}</p>
         </div>
         <div className="carousel-controls">
-          <span>{String(active + 1).padStart(2, '0')} <i>/</i> {String(products.length).padStart(2, '0')}</span>
-          <button onClick={() => scroll(-1)} aria-label="Previous products"><ChevronLeft size={20} /></button>
-          <button onClick={() => scroll(1)} aria-label="Next products"><ChevronRight size={20} /></button>
+          <span aria-live="polite">{String(activeProduct + 1).padStart(2, '0')}<i>/</i>{String(products.length).padStart(2, '0')}</span>
+          <button type="button" onClick={() => scrollProducts(-1)} disabled={activeProduct === 0} aria-label={lang === 'en' ? 'Previous product' : 'पिछला उत्पाद'}>
+            <ChevronLeft size={19} />
+          </button>
+          <button type="button" onClick={() => scrollProducts(1)} disabled={activeProduct >= products.length - 1} aria-label={lang === 'en' ? 'Next product' : 'अगला उत्पाद'}>
+            <ChevronRight size={19} />
+          </button>
         </div>
       </div>
       <div className="carousel-window">
-        <div className="product-carousel" ref={scroller} onScroll={handleScroll} tabIndex={0} aria-label="Product examples carousel">
-          {products.map((product) => <ProductCard product={product} lang={lang} key={product.name} />)}
+        <div
+          className="product-carousel"
+          ref={carouselRef}
+          tabIndex={0}
+          role="region"
+          aria-roledescription="carousel"
+          aria-label={lang === 'en' ? 'Products' : 'उत्पाद'}
+          onScroll={(event) => {
+            const carousel = event.currentTarget;
+            const firstCard = carousel.querySelector<HTMLElement>('.product-card');
+            if (!firstCard) return;
+            const gap = Number.parseFloat(getComputedStyle(carousel).columnGap) || 18;
+            const index = Math.round(carousel.scrollLeft / (firstCard.offsetWidth + gap));
+            setActiveProduct(Math.min(index, products.length - 1));
+          }}
+        >
+        {products.map((product) => <ProductCard product={product} lang={lang} key={product.name} />)}
         </div>
       </div>
-      <div className="carousel-bottom">
-        <div className="carousel-dots" aria-hidden="true">{products.map((product, index) => <span className={index === active ? 'active' : ''} key={product.name} />)}</div>
-        <p>{lang === 'en' ? 'Swipe or use the arrows. Product examples only; ask the shop for today’s selection.' : 'स्वाइप करें या तीरों का उपयोग करें। उत्पाद उदाहरण मात्र; आज का चयन दुकान से पूछें।'}</p>
-      </div>
+      <p className="products-stock-note">{lang === 'en' ? 'Product details are indicative. Availability and packaging may change; please confirm with the shop.' : 'उत्पाद विवरण जानकारी के लिए हैं। उपलब्धता और पैक बदल सकते हैं; कृपया दुकान से पुष्टि करें।'}</p>
     </section>
   );
 }
@@ -398,10 +503,13 @@ function FloatingActions({ lang }: { lang: Lang }) {
 }
 
 export default function App() {
-  const [lang, setLang] = useState<Lang>('en');
+  const [lang, setLang] = useState<Lang>('hi');
   useEffect(() => {
-    document.title = 'Atul Beej Agency · Seeds & farm supplies in Kathfori';
-    const description = 'Atul Beej Agency in Kathfori, Firozabad — enquire about seeds, crop protection products and farm equipment before you visit.';
+    document.documentElement.lang = lang;
+    document.title = lang === 'hi' ? 'अतुल बीज एजेंसी · कठफोरी, फिरोजाबाद' : 'Atul Beej Agency · Kathfori, Firozabad';
+    const description = lang === 'hi'
+      ? 'कठफोरी, फिरोजाबाद स्थित अतुल बीज एजेंसी में बीज, उर्वरक और फसल सुरक्षा उत्पादों की जानकारी लें।'
+      : 'Ask Atul Beej Agency in Kathfori, Firozabad about seeds, fertilizers and crop-protection products.';
     let meta = document.querySelector('meta[name="description"]');
     if (!meta) {
       meta = document.createElement('meta');
@@ -409,15 +517,15 @@ export default function App() {
       document.head.appendChild(meta);
     }
     meta.setAttribute('content', description);
-  }, []);
+  }, [lang]);
   return (
     <div className="app-shell">
       <Header lang={lang} toggle={() => setLang(lang === 'en' ? 'hi' : 'en')} />
       <main>
+        <ProductsSection lang={lang} />
         <Hero lang={lang} />
         <IntroStrip lang={lang} />
         <SeasonFeature lang={lang} />
-        <ProductCarousel lang={lang} />
         <BrandsSection lang={lang} />
         <EnquirySection lang={lang} />
         <VisitSection lang={lang} />
