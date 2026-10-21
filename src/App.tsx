@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import {
   ArrowDownRight,
   ArrowRight,
@@ -12,13 +12,14 @@ import {
   Menu,
   MessageCircle,
   Phone,
+  Search,
   Send,
   Sprout,
   X,
 } from 'lucide-react';
 
 const WHATSAPP = '918630883629';
-const PHONE = '917417434709';
+const PHONE = '918630883629';
 const MAPS = 'https://maps.app.goo.gl/JD3uxwWw1GaZF4Jt6';
 const EMAIL = 'atulbeejagency@gmail.com';
 
@@ -36,6 +37,7 @@ type Product = {
   alt: string;
   message: string;
   messageHindi: string;
+  seasons?: string[];
 };
 
 const products: Product[] = [
@@ -50,8 +52,8 @@ const products: Product[] = [
     descriptionHindi: '18% नाइट्रोजन और 46% फॉस्फेट वाला दानेदार डीएपी उर्वरक। उपयोग से पहले पैक पर दिए निर्देश पढ़ें और फसल के अनुसार सलाह लें।',
     image: '/images/aalu/Image%20(10).jpg',
     alt: 'भारत डीएपी 18:46:0 उर्वरक का पैक',
-    message: 'I would like to ask about Bharat DAP 18:46:0 fertilizer. Please share availability and price.',
-    messageHindi: 'मुझे भारत डीएपी 18:46:0 उर्वरक के बारे में जानकारी चाहिए। कृपया उपलब्धता और कीमत बताएं।',
+    message: 'I would like to ask about Bharat DAP 18:46:0 fertilizer. Please share availability and pack details.',
+    messageHindi: 'मुझे भारत डीएपी 18:46:0 उर्वरक के बारे में जानकारी चाहिए। कृपया उपलब्धता और पैक का विवरण बताएं।',
   },
   {
     name: 'Bharat MOP 60% K₂O',
@@ -64,8 +66,8 @@ const products: Product[] = [
     descriptionHindi: 'पैक पर दी जानकारी के अनुसार 60% K₂O वाला म्यूरेट ऑफ पोटाश उर्वरक। फसल और मिट्टी के अनुसार मात्रा की सलाह लें।',
     image: '/images/aalu/Image%20(4).jpg',
     alt: 'भारत एमओपी 60% पोटाश उर्वरक का पैक',
-    message: 'I would like to ask about Bharat MOP potash fertilizer. Please share availability and price.',
-    messageHindi: 'मुझे भारत एमओपी पोटाश उर्वरक के बारे में जानकारी चाहिए। कृपया उपलब्धता और कीमत बताएं।',
+    message: 'I would like to ask about Bharat MOP potash fertilizer. Please share availability and pack details.',
+    messageHindi: 'मुझे भारत एमओपी पोटाश उर्वरक के बारे में जानकारी चाहिए। कृपया उपलब्धता और पैक का विवरण बताएं।',
   },
   {
     name: 'Super Kahar GR 10%',
@@ -162,8 +164,9 @@ const products: Product[] = [
     descriptionHindi: 'चारा फसल बरसीम की बुवाई के लिए कावेरी ब्रांड का बीज। पैक का वजन, बुवाई का समय और उपलब्धता दुकान से पूछें।',
     image: '/images/aalu/Image%20(13).jpg',
     alt: 'कावेरी बरसीम बीज का प्रचार पोस्टर और पैक',
-    message: 'I would like to ask about Kaveri Barseem seed. Please share pack size, availability and price.',
-    messageHindi: 'मुझे कावेरी बरसीम बीज के बारे में जानकारी चाहिए। कृपया पैक का वजन, उपलब्धता और कीमत बताएं।',
+    message: 'I would like to ask about Kaveri Barseem seed. Please share pack size and availability.',
+    messageHindi: 'मुझे कावेरी बरसीम बीज के बारे में जानकारी चाहिए। कृपया पैक का वजन और उपलब्धता बताएं।',
+    seasons: ['rabi'],
   },
 ];
 
@@ -185,6 +188,10 @@ function waLink(message: string) {
 
 function callLink() {
   return `tel:+${PHONE}`;
+}
+
+function productSlug(product: Product) {
+  return product.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 }
 
 function SectionKicker({ children, light = false }: { children: ReactNode; light?: boolean }) {
@@ -243,7 +250,7 @@ function Header({ lang, toggle }: { lang: Lang; toggle: () => void }) {
           {nav.map(([href, label]) => (
             <a href={href} key={href} onClick={() => setOpen(false)}>{label}<ChevronRight size={17} /></a>
           ))}
-          <a className="mobile-call" href={callLink()} onClick={() => setOpen(false)}><Phone size={16} /> {lang === 'en' ? 'Call 074174 34709' : '074174 34709 पर कॉल करें'}</a>
+          <a className="mobile-call" href={callLink()} onClick={() => setOpen(false)}><Phone size={16} /> {lang === 'en' ? 'Call 86308 83629' : '86308 83629 पर कॉल करें'}</a>
         </nav>
       )}
     </header>
@@ -273,7 +280,7 @@ function Hero({ lang }: { lang: Lang }) {
           </p>
           <div className="hero-buttons">
             <a href="#products" className="button button-dark">{lang === 'en' ? 'Explore products' : 'उत्पाद देखें'} <ArrowDownRight size={18} /></a>
-            <EnquiryLink message="I want to enquire about a farm product. Please help me with current availability and price." className="button button-outline"><MessageCircle size={18} /> {lang === 'en' ? 'Ask on WhatsApp' : 'व्हाट्सऐप पर पूछें'}</EnquiryLink>
+            <EnquiryLink message="I want to enquire about a farm product. Please help me confirm current availability." className="button button-outline"><MessageCircle size={18} /> {lang === 'en' ? 'Ask on WhatsApp' : 'व्हाट्सऐप पर पूछें'}</EnquiryLink>
           </div>
           <div className="hero-note"><span className="note-rule" /> {lang === 'en' ? 'Availability changes. A quick call saves a wasted trip.' : 'उपलब्धता बदल सकती है। एक कॉल से बेकार की यात्रा बच सकती है।'}</div>
         </div>
@@ -328,27 +335,109 @@ function SeasonFeature({ lang }: { lang: Lang }) {
   );
 }
 
-function ProductCard({ product, lang }: { product: Product; lang: Lang }) {
+function ProductCard({ product, lang, index }: { product: Product; lang: Lang; index: number }) {
   return (
     <article className="product-card">
       <div className="product-image">
         <img src={product.image} alt={product.alt} loading="lazy" />
-        <span className="product-index">{String(products.indexOf(product) + 1).padStart(2, '0')}</span>
+        <span className="product-index">{String(index + 1).padStart(2, '0')}</span>
+        <span className="product-availability">{lang === 'en' ? 'Confirm availability' : 'उपलब्धता पूछें'}</span>
       </div>
       <div className="product-card-body">
         <div className="product-meta"><span>{lang === 'en' ? product.category : product.categoryHindi}</span><span>{lang === 'en' ? product.crop : product.cropHindi}</span></div>
-        <h3>{product.name}</h3>
-        <p className="hindi-line">{product.hindi}</p>
+        <h3>{lang === 'en' ? product.name : product.hindi}</h3>
+        <p className="hindi-line">{lang === 'en' ? product.hindi : product.name}</p>
         <p className="product-description">{lang === 'en' ? product.description : product.descriptionHindi}</p>
-        <EnquiryLink message={lang === 'en' ? product.message : product.messageHindi} className="product-enquire"><span>{lang === 'en' ? 'Ask about this product' : 'इस उत्पाद की जानकारी लें'}</span><ArrowRight size={15} /></EnquiryLink>
+        <div className="product-card-actions">
+          <a className="product-details-link" href={`#product/${productSlug(product)}`}>{lang === 'en' ? 'View details' : 'विवरण देखें'} <ArrowRight size={15} /></a>
+          <EnquiryLink message={lang === 'en' ? product.message : product.messageHindi} className="product-enquire"><span>{lang === 'en' ? 'Ask on WhatsApp' : 'व्हाट्सऐप पर पूछें'}</span><MessageCircle size={15} /></EnquiryLink>
+        </div>
       </div>
     </article>
+  );
+}
+
+function EnquiryForm({ lang, product }: { lang: Lang; product?: Product }) {
+  const [whatsAppUrl, setWhatsAppUrl] = useState('');
+  const [formError, setFormError] = useState('');
+  const categories = [...new Set(products.map((item) => item.category))];
+  const cropPrefill = product && !['For crop nutrition', 'Read label before use', 'Boron 10.5%', 'Zinc and sulphur', 'Granular formulation'].includes(product.crop)
+    ? (lang === 'en' ? product.crop : product.cropHindi)
+    : '';
+
+  function prepareEnquiry(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const mobile = String(formData.get('mobile') ?? '').trim();
+    if (!/^[6-9]\d{9}$/.test(mobile)) {
+      setFormError(lang === 'en' ? 'Enter a valid 10-digit Indian mobile number.' : 'कृपया 10 अंकों का सही भारतीय मोबाइल नंबर दर्ज करें।');
+      setWhatsAppUrl('');
+      return;
+    }
+
+    const value = (field: string) => String(formData.get(field) ?? '').trim();
+    const preferred = value('preferredContact');
+    const message = lang === 'en'
+      ? `New enquiry - Atul Beej Agency\nName: ${value('name')}\nMobile: ${mobile}\nVillage/Town: ${value('village')}\nCrop: ${value('crop')}\nCategory: ${value('category') || 'Not specified'}\nProduct: ${value('product') || 'Not specified'}\nRequired quantity/pack: ${value('quantity') || 'Not specified'}\nMessage: ${value('message') || 'None'}\nPreferred contact: ${preferred === 'phone' ? 'Phone call' : 'WhatsApp'}`
+      : `नई पूछताछ - अतुल बीज एजेंसी\nनाम: ${value('name')}\nमोबाइल: ${mobile}\nगांव/शहर: ${value('village')}\nफसल: ${value('crop')}\nश्रेणी: ${value('category') || 'नहीं बताया'}\nउत्पाद: ${value('product') || 'नहीं बताया'}\nमात्रा/पैक: ${value('quantity') || 'नहीं बताया'}\nसंदेश: ${value('message') || 'नहीं है'}\nपसंदीदा संपर्क: ${preferred === 'phone' ? 'फोन कॉल' : 'व्हाट्सऐप'}`;
+
+    setFormError('');
+    setWhatsAppUrl(waLink(message));
+  }
+
+  return (
+    <form className="enquiry-form" onSubmit={prepareEnquiry} onChange={() => { setWhatsAppUrl(''); setFormError(''); }}>
+      <div className="form-grid">
+        <label>{lang === 'en' ? 'Your name *' : 'आपका नाम *'}<input name="name" autoComplete="name" required /></label>
+        <label>{lang === 'en' ? 'Mobile number *' : 'मोबाइल नंबर *'}<input name="mobile" type="tel" inputMode="numeric" autoComplete="tel-national" maxLength={10} pattern="[6-9][0-9]{9}" title={lang === 'en' ? 'Enter a valid 10-digit Indian mobile number' : '10 अंकों का भारतीय मोबाइल नंबर दर्ज करें'} required /></label>
+        <label>{lang === 'en' ? 'Village or town *' : 'गांव या शहर *'}<input name="village" autoComplete="address-level2" required /></label>
+        <label>{lang === 'en' ? 'Crop *' : 'फसल *'}<input name="crop" defaultValue={cropPrefill} required /></label>
+        <label>{lang === 'en' ? 'Product category' : 'उत्पाद श्रेणी'}<select name="category" defaultValue={product?.category ?? ''}><option value="">{lang === 'en' ? 'Choose a category' : 'श्रेणी चुनें'}</option>{categories.map((item) => <option value={item} key={item}>{lang === 'en' ? item : products.find((entry) => entry.category === item)?.categoryHindi}</option>)}</select></label>
+        <label>{lang === 'en' ? 'Product name' : 'उत्पाद का नाम'}<input name="product" defaultValue={product ? (lang === 'en' ? product.name : product.hindi) : ''} /></label>
+        <label>{lang === 'en' ? 'Required quantity or pack size' : 'चाहिए मात्रा या पैक'}<input name="quantity" /></label>
+        <label>{lang === 'en' ? 'Preferred contact' : 'पसंदीदा संपर्क'}<select name="preferredContact" defaultValue="whatsapp"><option value="whatsapp">WhatsApp</option><option value="phone">{lang === 'en' ? 'Phone call' : 'फोन कॉल'}</option></select></label>
+        <label className="form-message">{lang === 'en' ? 'Message or farming query' : 'संदेश या खेती से जुड़ा सवाल'}<textarea name="message" rows={4} /></label>
+      </div>
+      <label className="consent-check"><input name="consent" type="checkbox" required /><span>{lang === 'en' ? 'I agree to share these details with Atul Beej Agency to respond to my enquiry. *' : 'मैं अपनी पूछताछ का जवाब पाने के लिए ये जानकारी अतुल बीज एजेंसी से साझा करने की सहमति देता/देती हूं। *'}</span></label>
+      {formError && <p className="form-status form-error" role="alert">{formError}</p>}
+      {whatsAppUrl
+        ? <a className="button button-dark form-submit" href={whatsAppUrl} target="_blank" rel="noreferrer"><MessageCircle size={17} /> {lang === 'en' ? 'Open WhatsApp to review and send' : 'जांचें और भेजने के लिए व्हाट्सऐप खोलें'}</a>
+        : <button className="button button-dark form-submit" type="submit"><Send size={17} /> {lang === 'en' ? 'Prepare WhatsApp enquiry' : 'व्हाट्सऐप पूछताछ तैयार करें'}</button>}
+      <p className="form-status" role="status">{lang === 'en' ? 'Your details are not submitted or stored by this website. WhatsApp opens with a draft; press Send there to contact the shop.' : 'यह वेबसाइट आपकी जानकारी जमा या सेव नहीं करती। व्हाट्सऐप में संदेश का ड्राफ्ट खुलेगा; दुकान से संपर्क करने के लिए वहां भेजें दबाएं।'}</p>
+    </form>
   );
 }
 
 function ProductsSection({ lang }: { lang: Lang }) {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [activeProduct, setActiveProduct] = useState(0);
+  const [query, setQuery] = useState('');
+  const [category, setCategory] = useState('');
+  const [crop, setCrop] = useState('');
+  const [season, setSeason] = useState('');
+  const [sort, setSort] = useState('listed');
+  const categories = [...new Set(products.map((product) => product.category))];
+  const crops = [...new Set(products.map((product) => product.crop))];
+  const seasons = [
+    { id: '', en: 'All products', hi: 'सभी उत्पाद' },
+    { id: 'rabi', en: 'Rabi', hi: 'रबी' },
+    { id: 'kharif', en: 'Kharif', hi: 'खरीफ' },
+    { id: 'zaid', en: 'Zaid / Summer', hi: 'जायद / गर्मी' },
+  ];
+  const visibleProducts = products
+    .filter((product) => {
+      const searchText = `${product.name} ${product.hindi} ${product.category} ${product.categoryHindi} ${product.crop} ${product.cropHindi}`.toLocaleLowerCase();
+      return (!query || searchText.includes(query.trim().toLocaleLowerCase()))
+        && (!category || product.category === category)
+        && (!crop || product.crop === crop)
+        && (!season || product.seasons?.includes(season));
+    })
+    .sort((first, second) => sort === 'name' ? first.name.localeCompare(second.name) : products.indexOf(first) - products.indexOf(second));
+
+  useEffect(() => {
+    carouselRef.current?.scrollTo({ left: 0 });
+    setActiveProduct(0);
+  }, [query, category, crop, season, sort]);
 
   function scrollProducts(direction: number) {
     const carousel = carouselRef.current;
@@ -365,39 +454,80 @@ function ProductsSection({ lang }: { lang: Lang }) {
         <div>
           <SectionKicker>{lang === 'en' ? 'Products at Atul Beej Agency' : 'अतुल बीज एजेंसी के उत्पाद'}</SectionKicker>
           <h2>{lang === 'en' ? <>For your field,<br /><em>all in one place.</em></> : <>खेत की जरूरतें,<br /><em>एक ही जगह।</em></>}</h2>
-          <p className="products-intro">{lang === 'en' ? 'Browse seeds, fertilizers and crop-protection products shown here. Ask us to confirm today’s stock, price and product-label details before visiting.' : 'यहाँ बीज, उर्वरक और फसल सुरक्षा के उत्पाद देखें। दुकान आने से पहले उपलब्ध स्टॉक, कीमत और पैक पर दिए निर्देशों की पुष्टि कर लें।'}</p>
+          <p className="products-intro">{lang === 'en' ? 'Browse listed seeds, fertilizers and crop-protection products. Ask the shop to confirm current availability and check the product label before use.' : 'सूची में दिए बीज, उर्वरक और फसल सुरक्षा उत्पाद देखें। मौजूदा उपलब्धता दुकान से पूछें और उपयोग से पहले उत्पाद का लेबल पढ़ें।'}</p>
         </div>
         <div className="carousel-controls">
-          <span aria-live="polite">{String(activeProduct + 1).padStart(2, '0')}<i>/</i>{String(products.length).padStart(2, '0')}</span>
-          <button type="button" onClick={() => scrollProducts(-1)} disabled={activeProduct === 0} aria-label={lang === 'en' ? 'Previous product' : 'पिछला उत्पाद'}>
-            <ChevronLeft size={19} />
-          </button>
-          <button type="button" onClick={() => scrollProducts(1)} disabled={activeProduct >= products.length - 1} aria-label={lang === 'en' ? 'Next product' : 'अगला उत्पाद'}>
-            <ChevronRight size={19} />
-          </button>
+          <span aria-live="polite">{visibleProducts.length ? String(activeProduct + 1).padStart(2, '0') : '00'}<i>/</i>{String(visibleProducts.length).padStart(2, '0')}</span>
+          <button type="button" onClick={() => scrollProducts(-1)} disabled={activeProduct === 0 || visibleProducts.length === 0} aria-label={lang === 'en' ? 'Previous product' : 'पिछला उत्पाद'}><ChevronLeft size={19} /></button>
+          <button type="button" onClick={() => scrollProducts(1)} disabled={activeProduct >= visibleProducts.length - 1 || visibleProducts.length === 0} aria-label={lang === 'en' ? 'Next product' : 'अगला उत्पाद'}><ChevronRight size={19} /></button>
         </div>
+      </div>
+      <div className="catalog-tools">
+        <label className="catalog-search"><Search size={17} /><span className="sr-only">{lang === 'en' ? 'Search products' : 'उत्पाद खोजें'}</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={lang === 'en' ? 'Search products' : 'उत्पाद खोजें'} /></label>
+        <label className="catalog-select"><span>{lang === 'en' ? 'Category' : 'श्रेणी'}</span><select value={category} onChange={(event) => setCategory(event.target.value)}><option value="">{lang === 'en' ? 'All categories' : 'सभी श्रेणियां'}</option>{categories.map((item) => <option value={item} key={item}>{lang === 'en' ? item : products.find((product) => product.category === item)?.categoryHindi}</option>)}</select></label>
+        <label className="catalog-select"><span>{lang === 'en' ? 'Crop / use' : 'फसल / उपयोग'}</span><select value={crop} onChange={(event) => setCrop(event.target.value)}><option value="">{lang === 'en' ? 'All crops and uses' : 'सभी फसलें और उपयोग'}</option>{crops.map((item) => <option value={item} key={item}>{lang === 'en' ? item : products.find((product) => product.crop === item)?.cropHindi}</option>)}</select></label>
+        <label className="catalog-select"><span>{lang === 'en' ? 'Order' : 'क्रम'}</span><select value={sort} onChange={(event) => setSort(event.target.value)}><option value="listed">{lang === 'en' ? 'Shop listing' : 'दुकान की सूची'}</option><option value="name">{lang === 'en' ? 'Name A-Z' : 'नाम के अनुसार'}</option></select></label>
+      </div>
+      <div className="season-filters" role="group" aria-label={lang === 'en' ? 'Filter by season' : 'मौसम के अनुसार छांटें'}>
+        {seasons.map((item) => <button type="button" key={item.id || 'all'} className={season === item.id ? 'season-filter-active' : ''} onClick={() => setSeason(item.id)}>{lang === 'en' ? item.en : item.hi}</button>)}
       </div>
       <div className="carousel-window">
-        <div
-          className="product-carousel"
-          ref={carouselRef}
-          tabIndex={0}
-          role="region"
-          aria-roledescription="carousel"
-          aria-label={lang === 'en' ? 'Products' : 'उत्पाद'}
-          onScroll={(event) => {
-            const carousel = event.currentTarget;
-            const firstCard = carousel.querySelector<HTMLElement>('.product-card');
-            if (!firstCard) return;
-            const gap = Number.parseFloat(getComputedStyle(carousel).columnGap) || 18;
-            const index = Math.round(carousel.scrollLeft / (firstCard.offsetWidth + gap));
-            setActiveProduct(Math.min(index, products.length - 1));
-          }}
-        >
-        {products.map((product) => <ProductCard product={product} lang={lang} key={product.name} />)}
+        <div className="product-carousel" ref={carouselRef} tabIndex={0} role="region" aria-roledescription="carousel" aria-label={lang === 'en' ? 'Products' : 'उत्पाद'} onScroll={(event) => {
+          const carousel = event.currentTarget;
+          const firstCard = carousel.querySelector<HTMLElement>('.product-card');
+          if (!firstCard) return;
+          const gap = Number.parseFloat(getComputedStyle(carousel).columnGap) || 18;
+          const index = Math.round(carousel.scrollLeft / (firstCard.offsetWidth + gap));
+          setActiveProduct(Math.min(index, visibleProducts.length - 1));
+        }}>
+          {visibleProducts.map((product, index) => <ProductCard product={product} lang={lang} index={index} key={product.name} />)}
         </div>
+        {visibleProducts.length === 0 && <p className="catalog-empty">{lang === 'en' ? 'No listed products match these filters. Ask the shop about other products.' : 'इन फ़िल्टर से मेल खाने वाला कोई सूचीबद्ध उत्पाद नहीं है। अन्य उत्पादों के लिए दुकान से पूछें।'}</p>}
       </div>
-      <p className="products-stock-note">{lang === 'en' ? 'Product details are indicative. Availability and packaging may change; please confirm with the shop.' : 'उत्पाद विवरण जानकारी के लिए हैं। उपलब्धता और पैक बदल सकते हैं; कृपया दुकान से पुष्टि करें।'}</p>
+      <p className="products-stock-note">{lang === 'en' ? 'Season tags are shown only where a crop season is identified. Listings do not confirm current stock or pack availability.' : 'मौसम का टैग वहीं दिखाया गया है जहां फसल का मौसम पहचाना गया है। सूची से मौजूदा स्टॉक या पैक की उपलब्धता की पुष्टि नहीं होती।'}</p>
+    </section>
+  );
+}
+
+function EnquirySection({ lang }: { lang: Lang }) {
+  return (
+    <section className="enquiry-section" id="enquiry">
+      <div className="enquiry-inner">
+        <div className="enquiry-header">
+          <SectionKicker>{lang === 'en' ? 'Product enquiry' : 'उत्पाद पूछताछ'}</SectionKicker>
+          <h2>{lang === 'en' ? <>Ask us.<br /><em>Plan your visit.</em></> : <>हमसे पूछें।<br /><em>फिर आएं।</em></>}</h2>
+          <p>{lang === 'en' ? 'Share what you need and the shop can confirm details before you travel.' : 'अपनी जरूरत बताएं ताकि यात्रा से पहले दुकान से जानकारी की पुष्टि कर सकें।'}</p>
+        </div>
+        <EnquiryForm lang={lang} />
+      </div>
+    </section>
+  );
+}
+
+function ProductDetail({ product, lang }: { product: Product; lang: Lang }) {
+  const details = lang === 'en' ? product.description : product.descriptionHindi;
+  return (
+    <section className="product-detail-section">
+      <div className="product-detail-inner">
+        <a className="detail-back" href="#products"><ChevronLeft size={17} /> {lang === 'en' ? 'Back to products' : 'उत्पादों पर वापस जाएं'}</a>
+        <div className="product-detail-layout">
+          <div className="detail-image"><img src={product.image} alt={product.alt} /></div>
+          <div className="detail-copy">
+            <SectionKicker>{lang === 'en' ? product.category : product.categoryHindi}</SectionKicker>
+            <h1>{lang === 'en' ? product.name : product.hindi}</h1>
+            {lang === 'en' && <p className="detail-hindi-name">{product.hindi}</p>}
+            <p className="detail-description">{details}</p>
+            <dl className="detail-facts">
+              <div><dt>{lang === 'en' ? 'Category' : 'श्रेणी'}</dt><dd>{lang === 'en' ? product.category : product.categoryHindi}</dd></div>
+              <div><dt>{lang === 'en' ? 'Crop / use' : 'फसल / उपयोग'}</dt><dd>{lang === 'en' ? product.crop : product.cropHindi}</dd></div>
+              <div><dt>{lang === 'en' ? 'Pack and availability' : 'पैक और उपलब्धता'}</dt><dd>{lang === 'en' ? 'Please confirm with the shop' : 'दुकान से पुष्टि करें'}</dd></div>
+            </dl>
+            <p className="detail-label-note">{lang === 'en' ? 'Follow the instructions on the original product label. Ask the shop to confirm current product details.' : 'मूल उत्पाद पैक पर दिए निर्देशों का पालन करें। मौजूदा उत्पाद विवरण की पुष्टि दुकान से करें।'}</p>
+            <div className="detail-actions"><a className="button button-dark" href={callLink()}><Phone size={17} /> {lang === 'en' ? 'Call the shop' : 'दुकान पर कॉल करें'}</a><EnquiryLink message={lang === 'en' ? product.message : product.messageHindi} className="button button-outline"><MessageCircle size={17} /> {lang === 'en' ? 'Ask on WhatsApp' : 'व्हाट्सऐप पर पूछें'}</EnquiryLink></div>
+          </div>
+        </div>
+        <EnquiryForm lang={lang} product={product} />
+      </div>
     </section>
   );
 }
@@ -429,28 +559,6 @@ function BrandsSection({ lang }: { lang: Lang }) {
   );
 }
 
-function EnquirySection({ lang }: { lang: Lang }) {
-  return (
-    <section className="enquiry-section">
-      <div className="enquiry-inner">
-        <div className="enquiry-header">
-          <SectionKicker>{lang === 'en' ? 'A simple next step' : 'अगला आसान कदम'}</SectionKicker>
-          <h2>{lang === 'en' ? <>Ask first.<br /><em>Travel sure.</em></> : <>पहले पूछें।<br /><em>फिर निश्चिंत होकर आएं।</em></>}</h2>
-        </div>
-        <div className="steps">
-          <div className="step"><span>01</span><div><h3>{lang === 'en' ? 'Tell us your crop' : 'अपनी फसल बताएं'}</h3><p>{lang === 'en' ? 'Share the product, crop or equipment you are looking for.' : 'जिस उत्पाद, फसल या उपकरण की जरूरत है, बताएं।'}</p></div></div>
-          <div className="step"><span>02</span><div><h3>{lang === 'en' ? 'Choose a channel' : 'संपर्क का तरीका चुनें'}</h3><p>{lang === 'en' ? 'Call, email or send a ready enquiry on WhatsApp.' : 'कॉल, ईमेल या व्हाट्सऐप से पूछताछ भेजें।'}</p></div></div>
-          <div className="step"><span>03</span><div><h3>{lang === 'en' ? 'Plan your visit' : 'अपनी यात्रा तय करें'}</h3><p>{lang === 'en' ? 'Confirm the current selection and directions before you set out.' : 'निकलने से पहले चयन और रास्ते की पुष्टि करें।'}</p></div></div>
-        </div>
-        <div className="enquiry-actions">
-          <EnquiryLink message="I want to enquire about a farm product. Please help me with current availability and price." className="button button-dark"><Send size={17} /> {lang === 'en' ? 'Start a WhatsApp enquiry' : 'व्हाट्सऐप पूछताछ शुरू करें'}</EnquiryLink>
-          <a href={callLink()} className="button button-quiet"><Phone size={17} /> 074174 34709</a>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function VisitSection({ lang }: { lang: Lang }) {
   return (
     <section className="visit-section" id="visit">
@@ -462,7 +570,7 @@ function VisitSection({ lang }: { lang: Lang }) {
           <div className="visit-links">
             <a href={MAPS} target="_blank" rel="noreferrer"><MapPin size={17} /> {lang === 'en' ? 'Open directions' : 'रास्ता खोलें'} <ExternalLink size={14} /></a>
             <a href={`mailto:${EMAIL}`}><Mail size={17} /> {EMAIL}</a>
-            <a href={callLink()}><Phone size={17} /> 074174 34709</a>
+            <a href={callLink()}><Phone size={17} /> 86308 83629</a>
           </div>
           <div className="timing-note"><Clock3 size={16} /><span>{lang === 'en' ? 'Timings and availability can change. Please call before you visit.' : 'समय और उपलब्धता बदल सकते हैं। आने से पहले कॉल करें।'}</span></div>
         </div>
@@ -486,7 +594,7 @@ function Footer({ lang }: { lang: Lang }) {
           <p>{lang === 'en' ? 'A local agricultural shop for farmers around Kathfori, कठफोरी, Firozabad and nearby villages.' : 'कठफोरी, Firozabad और आसपास के गांवों के किसानों के लिए स्थानीय कृषि दुकान।'}</p>
         </div>
         <div className="footer-column"><span className="footer-label">{lang === 'en' ? 'Navigate' : 'देखें'}</span><a href="#products">{lang === 'en' ? 'Product examples' : 'उत्पाद उदाहरण'}</a><a href="#brands">{lang === 'en' ? 'Brands' : 'ब्रांड'}</a><a href="#visit">{lang === 'en' ? 'Visit the shop' : 'दुकान पर आएं'}</a></div>
-        <div className="footer-column"><span className="footer-label">{lang === 'en' ? 'Contact' : 'संपर्क'}</span><a href={callLink()}><Phone size={14} /> 074174 34709</a><a href={waLink('I want to enquire about a farm product.')}><MessageCircle size={14} /> 8630883629 WhatsApp</a><a href={`mailto:${EMAIL}`}><Mail size={14} /> {EMAIL}</a></div>
+        <div className="footer-column"><span className="footer-label">{lang === 'en' ? 'Contact' : 'संपर्क'}</span><a href={callLink()}><Phone size={14} /> 8630883629</a><a href={waLink('I want to enquire about a farm product.')}><MessageCircle size={14} /> 8630883629 WhatsApp</a><a href={`mailto:${EMAIL}`}><Mail size={14} /> {EMAIL}</a></div>
       </div>
       <div className="footer-bottom"><span>© Atul Beej Agency · Kathfori, Uttar Pradesh</span><span>{lang === 'en' ? 'Product examples are not a live stock list.' : 'उत्पाद उदाहरण लाइव स्टॉक सूची नहीं हैं।'}</span></div>
     </footer>
@@ -496,7 +604,7 @@ function Footer({ lang }: { lang: Lang }) {
 function FloatingActions({ lang }: { lang: Lang }) {
   return (
     <>
-      <a className="floating-whatsapp" href={waLink('I want to enquire about a farm product. Please help me with current availability and price.')} target="_blank" rel="noreferrer" aria-label={lang === 'en' ? 'Message Atul Beej Agency on WhatsApp' : 'व्हाट्सऐप पर संदेश भेजें'}><MessageCircle size={24} /></a>
+      <a className="floating-whatsapp" href={waLink('I want to enquire about a farm product. Please help me confirm current availability.')} target="_blank" rel="noreferrer" aria-label={lang === 'en' ? 'Message Atul Beej Agency on WhatsApp' : 'व्हाट्सऐप पर संदेश भेजें'}><MessageCircle size={24} /></a>
       <div className="mobile-contact-bar"><a href={callLink()}><Phone size={16} /> {lang === 'en' ? 'Call shop' : 'कॉल करें'}</a><a href={waLink('I want to enquire about a farm product.')}><MessageCircle size={16} /> WhatsApp</a></div>
     </>
   );
@@ -504,6 +612,16 @@ function FloatingActions({ lang }: { lang: Lang }) {
 
 export default function App() {
   const [lang, setLang] = useState<Lang>('hi');
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  useEffect(() => {
+    const syncProductRoute = () => {
+      const route = window.location.hash.startsWith('#product/') ? window.location.hash.slice('#product/'.length) : '';
+      setSelectedProduct(products.find((product) => productSlug(product) === route) ?? null);
+    };
+    syncProductRoute();
+    window.addEventListener('hashchange', syncProductRoute);
+    return () => window.removeEventListener('hashchange', syncProductRoute);
+  }, []);
   useEffect(() => {
     document.documentElement.lang = lang;
     document.title = lang === 'hi' ? 'अतुल बीज एजेंसी · कठफोरी, फिरोजाबाद' : 'Atul Beej Agency · Kathfori, Firozabad';
@@ -522,13 +640,15 @@ export default function App() {
     <div className="app-shell">
       <Header lang={lang} toggle={() => setLang(lang === 'en' ? 'hi' : 'en')} />
       <main>
-        <ProductsSection lang={lang} />
-        <Hero lang={lang} />
-        <IntroStrip lang={lang} />
-        <SeasonFeature lang={lang} />
-        <BrandsSection lang={lang} />
-        <EnquirySection lang={lang} />
-        <VisitSection lang={lang} />
+        {selectedProduct ? <ProductDetail product={selectedProduct} lang={lang} /> : <>
+          <ProductsSection lang={lang} />
+          <Hero lang={lang} />
+          <IntroStrip lang={lang} />
+          <SeasonFeature lang={lang} />
+          <BrandsSection lang={lang} />
+          <EnquirySection lang={lang} />
+          <VisitSection lang={lang} />
+        </>}
       </main>
       <Footer lang={lang} />
       <FloatingActions lang={lang} />
